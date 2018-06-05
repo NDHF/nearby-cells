@@ -12,40 +12,38 @@ var houses =
 "h01", "h02", "h03", "h04", "h05", "h06", "h07", "h08", "h09", "h10",
 "i01", "i02", "i03", "i04", "i05", "i06", "i07", "i08", "i09", "i10",
 "j01", "j02", "j03", "j04", "j05", "j06", "j07", "j08", "j09", "j10"
-
 ];
 
 var nearby = [];
 
 function nearbyHomes(houseCode) {
-
 	for (i = 0; i <= houses.length; i++) {
-	 if (houses[i].valueOf() === houseCode.valueOf()) {
-
-	nearby = [houses[i - 11], houses[i - 10], houses[i - 9], houses[i - 1], houses[i + 1], houses[i + 9], houses[i + 10], houses[i + 11]];
-
-	if (houseCode.endsWith("01")) {
-
-	nearby.splice(0, 1);
-	nearby.splice(2, 1);
-	nearby.splice(3, 1);
-
-	} else if (houseCode.endsWith("10")) {
-
-	nearby.splice(2, 1);
-	nearby.splice(3, 1);
-	nearby.splice(5, 1);
-
-
-
+	 // Compare user-submitted string against strings in the array
+	 if (houses[i].valueOf() === houseCode) {
+		 //This array will contain all cells in the grid within one cell of the original
+		 //This part could be simplified and made reusable:
+		 //There should be a way to have the nearbyHomes function take the height 
+		 //and width of the grid as agruments, build the array, and know what to remove from it,
+		 //based on these values.
+	 nearby = [houses[i - 11], houses[i - 10], houses[i - 9], houses[i - 1], houses[i + 1], 
+	 	houses[i + 9], houses[i + 10], houses[i + 11]];
+	  //This will handle all strings along the left-hand side of the grid, 
+	  //splicing out returned indices on the opposite side of the page
+	  if (houseCode.endsWith("01")) {
+	  nearby.splice(0, 1);
+	  nearby.splice(2, 1);
+	  nearby.splice(3, 1);
+          //This will do the same as the above if-statement, for the right-hand side 
+     	} else if (houseCode.endsWith("10")) {		
+	    nearby.splice(2, 1);
+	    nearby.splice(3, 1);
+	    nearby.splice(5, 1);
 	 }
-
-    //The filter method will remove all undefined indices, courtesy of Bill on stackoverflow: https://stackoverflow.com/users/1879895/bill
+	//The filter method here will remove all undefined indices. Filter function
+	//courtesy of Bill on stackoverflow: https://stackoverflow.com/users/1879895/bill
 	console.log(nearby.filter(function(n){ return n != undefined }));
-
     }
-
-}
+	}
 };
 
 nearbyHomes("j09");
